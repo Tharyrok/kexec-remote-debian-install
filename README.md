@@ -4,7 +4,7 @@ Work in progress tools to remotely re-install Debian or Ubuntu using kexec and S
 
 ## build.py
 
-Before running `build.py` you will need a `linux` and `initrd.gz` file from the installer of the distro you prefer.
+Before running `build.py` you will need the `linux` and `initrd.gz` files from the netboot installer of the distro you prefer.
 
 * Ubuntu Trusty AMD64 http://linux.citylink.co.nz/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/
 * Debian Jessie AMD64 http://linux.citylink.co.nz/debian/dists/jessie/main/installer-amd64/current/images/netboot/debian-installer/amd64/
