@@ -36,7 +36,7 @@ Currently `build.py` must be run as root, as it unpacks the cpio archive and re-
     Re-packing initrd...
     105825 blocks
 
-Once `initrd.gz` has been re-packed the new kernel can be launched:
+Once `initrd.gz` has been re-packed the new kernel can be launched directly with kexec:
 
     kexec --command-line="auto=true priority=critical" --initrd=initrd.gz linux
 
