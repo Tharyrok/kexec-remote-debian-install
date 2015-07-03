@@ -11,7 +11,7 @@ Before running `build.py` you will need the `linux` and `initrd.gz` files from t
 
 Currently `build.py` must be run as root, as it unpacks the cpio archive and re-packs it, and this allows the permissions of various device files to be preserved. 
 
-    sudo ./build.py initrd.gz eth0 172.16.0.4 255.255.255.0 172.16.0.1 8.8.8.8
+    $ sudo ./build.py initrd.gz eth0 172.16.0.4 255.255.255.0 172.16.0.1 8.8.8.8
 
     d-i anna/choose_modules string network-console
     d-i preseed/early_command string anna-install network-console
