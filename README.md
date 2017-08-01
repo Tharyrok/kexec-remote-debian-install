@@ -7,7 +7,11 @@ Work in progress tools to remotely re-install Debian or Ubuntu using kexec and S
 Before running `build.py` you will need the `linux` and `initrd.gz` files from the netboot installer of the distro you prefer.
 
 * Ubuntu Trusty AMD64 http://linux.citylink.co.nz/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/
-* Debian Jessie AMD64 http://linux.citylink.co.nz/debian/dists/jessie/main/installer-amd64/current/images/netboot/debian-installer/amd64/
+* Debian Stretch AMD64 http://linux.citylink.co.nz/debian/dists/stretch/main/installer-amd64/current/images/netboot/debian-installer/amd64/
+
+If you're upgrading from Debian Jessie to Debian Stretch you may not know what "eth0" is going to become inside the Stretch installer, as Stretch by default uses `systemd`'s new interface naming scheme. In order to predict what "eth0" will become once you reboot, you can examine the output of `udevadm` like so:
+
+    udevadm test /sys/class/net/eth0 2>/dev/null | grep ID_NET_NAME_PATH
 
 Currently `build.py` must be run as root, as it unpacks the cpio archive and re-packs it, and this allows the permissions of various device files to be preserved. 
 
