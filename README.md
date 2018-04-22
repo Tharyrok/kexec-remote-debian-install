@@ -11,7 +11,9 @@ Before running `build.py` you will need the `linux` and `initrd.gz` files from t
 
 If you're upgrading from Debian Jessie to Debian Stretch you may not know what "eth0" is going to become inside the Stretch installer, as Stretch by default uses `systemd`'s new interface naming scheme. In order to predict what "eth0" will become once you reboot, you can examine the output of `udevadm` like so:
 
-    udevadm test /sys/class/net/eth0 2>/dev/null | grep ID_NET_NAME_PATH
+    udevadm test /sys/class/net/eth0 2>/dev/null | grep ID_NET_NAME=
+
+Occasionally for reasons as yet unclear the device will end up with its `ID_NET_NAME_PATH` (e.g. `enp0s25` or similar) rather than its `ID_NET_NAME`. If the script doesn't seem to bring up networking during a Jessie -> Stretch re-install then it would be a good idea to try the other possible name format.
 
 Currently `build.py` must be run as root, as it unpacks the cpio archive and re-packs it, and this allows the permissions of various device files to be preserved. 
 
