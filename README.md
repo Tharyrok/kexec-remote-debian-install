@@ -45,3 +45,21 @@ Once `initrd.gz` has been re-packed the new kernel can be launched directly with
     kexec --command-line="auto=true priority=critical" --initrd=initrd.gz linux
 
 Once the machine has booted the new kernel, the installer will be available over SSH on the IP address given on the command line, with the username `installer` and the password shown during the build output. The password is generated randomly every time the script is run.
+
+## Tested distributions and releases
+
+This script is known to be able to install:
+
+* Debian Jessie
+* Debian Stretch
+* Ubuntu Trusty
+* Ubuntu Xenial
+* Ubuntu Bionic
+
+And will probably work on other releases too.
+
+## Caveats
+
+Presently the mirror used after rebooting may default to one that is not optimal for your location, so the initial bringup of SSH will take a worryingly long time. Don't worry, if you can ping it it's probably going to get there in the end.
+
+The method this uses to take over the initrd is really a horrible hack. One day I'll make something more structured.
