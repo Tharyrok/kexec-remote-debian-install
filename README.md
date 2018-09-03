@@ -9,11 +9,11 @@ Before running `build.py` you will need the `linux` and `initrd.gz` files from t
 * Ubuntu Bionic AMD64 http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/
 * Debian Stretch AMD64 http://deb.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/debian-installer/amd64/
 
-If you're upgrading from Debian Jessie to Debian Stretch you may not know what "eth0" is going to become inside the Stretch installer, as Stretch by default uses `systemd`'s new interface naming scheme. In order to predict what "eth0" will become once you reboot, you can examine the output of `udevadm` like so:
+If you're upgrading from Debian Jessie or Ubuntu Trusty to something newer you may not know what "eth0" is going to become inside the newer installer, as newer distros by default use `systemd`'s new interface naming scheme. In order to predict what "eth0" will become once you reboot, you can run this which will attempt to guess:
 
-    udevadm test /sys/class/net/eth0 2>/dev/null | grep ID_NET_NAME=
+    source <(udevadm test /sys/class/net/eth0 2>/dev/null | grep ID_NET_NAME); for name in "$ID_NET_NAME_ONBOARD" "$ID_NET_NAME_SLOT" "$ID_NET_NAME_PATH" "$ID_NET_NAME_MAC" ; do [[ -n $name ]] || continue; echo "$name"; break; done
 
-Occasionally for reasons as yet unclear the device will end up with its `ID_NET_NAME_PATH` (e.g. `enp0s25` or similar) rather than its `ID_NET_NAME`. If the script doesn't seem to bring up networking during a Jessie -> Stretch re-install then it would be a good idea to try the other possible name format.
+If the script doesn't seem to bring up networking during a Jessie or Trusty upgrade then it would be a good idea to try the other possible names in the output of `udevadm`.
 
 Currently `build.py` must be run as root, as it unpacks the cpio archive and re-packs it, and this allows the permissions of various device files to be preserved. 
 
