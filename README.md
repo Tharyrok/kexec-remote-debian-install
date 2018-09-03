@@ -15,9 +15,9 @@ If you're upgrading from Debian Jessie or Ubuntu Trusty to something newer you m
 
 If the script doesn't seem to bring up networking during a Jessie or Trusty upgrade then it would be a good idea to try the other possible names in the output of `udevadm`.
 
-Currently `build.py` must be run as root, as it unpacks the cpio archive and re-packs it, and this allows the permissions of various device files to be preserved. 
+Currently `build.py` must be run as root or with `fakeroot`, as it unpacks the cpio archive and re-packs it, and this allows the permissions of various device files to be preserved. 
 
-    $ sudo ./build.py initrd.gz eth0 172.16.0.4 255.255.255.0 172.16.0.1 8.8.8.8
+    $ fakeroot ./build.py initrd.gz eth0 192.0.2.5 255.255.255.0 192.0.2.1 8.8.8.8
 
     d-i anna/choose_modules string network-console
     d-i preseed/early_command string anna-install network-console
@@ -27,9 +27,9 @@ Currently `build.py` must be run as root, as it unpacks the cpio archive and re-
 
     d-i netcfg/choose_interface select eth0
     d-i netcfg/disable_dhcp boolean true
-    d-i netcfg/get_ipaddress string 172.16.0.4
+    d-i netcfg/get_ipaddress string 192.0.2.5
     d-i netcfg/get_netmask string 255.255.255.0
-    d-i netcfg/get_gateway string 172.16.0.1
+    d-i netcfg/get_gateway string 192.0.2.1
     d-i netcfg/get_nameservers string 8.8.8.8
     d-i netcfg/confirm_static boolean true
 
@@ -44,7 +44,7 @@ Currently `build.py` must be run as root, as it unpacks the cpio archive and re-
 
 Once `initrd.gz` has been re-packed the new kernel can be launched directly with kexec:
 
-    kexec --command-line="auto=true priority=critical" --initrd=initrd.gz linux
+    sudo kexec --command-line="auto=true priority=critical" --initrd=initrd.gz linux
 
 Once the machine has booted the new kernel, the installer will be available over SSH on the IP address given on the command line, with the username `installer` and the password shown during the build output. The password is generated randomly every time the script is run.
 
