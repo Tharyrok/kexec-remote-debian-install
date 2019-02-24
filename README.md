@@ -44,7 +44,7 @@ Currently `build.py` must be run as root or with `fakeroot`, as it unpacks the c
 
 Once `initrd.gz` has been re-packed the new kernel can be launched directly with kexec:
 
-    sudo kexec --command-line="auto=true priority=critical" --initrd=initrd.gz linux
+    sudo kexec --command-line="auto=true priority=critical mirror/http/hostname=deb.debian.org" --initrd=initrd.gz linux
 
 Once the machine has booted the new kernel, the installer will be available over SSH on the IP address given on the command line, with the username `installer` and the password shown during the build output. The password is generated randomly every time the script is run.
 
