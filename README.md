@@ -9,6 +9,14 @@ Before running `build.py` you will need the `linux` and `initrd.gz` files from t
 * Ubuntu Bionic AMD64 http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/
 * Ubuntu Eoan   AMD64 http://archive.ubuntu.com/ubuntu/dists/eoan/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/
 * Debian Buster AMD64 http://deb.debian.org/debian/dists/buster/main/installer-amd64/current/images/netboot/debian-installer/amd64/
+* Debian Bullseye AMD64 http://deb.debian.org/debian/dists/bullseye/main/installer-amd64/current/images/netboot/debian-installer/amd64/
+
+Add non-free fimrware debian :
+```
+[ -f initrd.gz.orig ] || cp -p initrd.gz initrd.gz.orig
+[ -f firmware.cpio.gz ] || wget http://cdimage.debian.org/cdimage/unofficial/non-free/firmware/stable/current/firmware.cpio.gz
+cat initrd.gz.orig firmware.cpio.gz > initrd.gz
+```
 
 If you're upgrading from Debian Jessie or Ubuntu Trusty to something newer you may not know what "eth0" is going to become inside the newer installer, as newer distros by default use `systemd`'s new interface naming scheme. In order to predict what "eth0" will become once you reboot, you can run this which will attempt to guess:
 
